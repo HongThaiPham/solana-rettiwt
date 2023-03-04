@@ -1,3 +1,4 @@
+import { bs58 } from "@project-serum/anchor/dist/cjs/utils/bytes";
 import * as anchor from "@project-serum/anchor";
 import { Program } from "@project-serum/anchor";
 import { expect } from "chai";
@@ -131,5 +132,51 @@ describe("solana-rettiwt", () => {
         "The provided content should be 280 characters long maximum."
       );
     }
+  });
+  it("can fetch all tweets", async () => {
+    const tweetAccounts = await program.account.tweet.all();
+
+    expect(tweetAccounts.length).equal(4);
+  });
+
+  it("can fetch all tweets by author", async () => {
+    const author = anchor.Wallet.local().publicKey;
+
+    const tweetAccounts = await program.account.tweet.all([
+      {
+        // dataSize: 2000,
+        // The size of the account data.a size in bytes and it will only return accounts that match exactly that size.
+        memcmp: {
+          // The position (in bytes) in which we should start comparing the data.
+          offset: 8, /// Discriminator.
+          // The data to compare to the account's data. This array of bytes should be encoded in base 58
+          bytes: author.toBase58(),
+        },
+      },
+    ]);
+
+    expect(tweetAccounts.length).equal(3);
+    tweetAccounts.forEach((tweetAccount) => {
+      expect(tweetAccount.account.author.toBase58()).equal(author.toBase58());
+    });
+  });
+
+  it("can fetch all tweets by topic", async () => {
+    const topic = "dev";
+
+    const tweetAccounts = await program.account.tweet.all([
+      {
+        memcmp: {
+          // The position (in bytes) in which we should start comparing the data.
+          offset: 8 + 32 + 4, /// Discriminator + author + prefix.
+          bytes: bs58.encode(Buffer.from(topic)),
+        },
+      },
+    ]);
+
+    expect(tweetAccounts.length).equal(3);
+    tweetAccounts.forEach((tweetAccount) => {
+      expect(tweetAccount.account.topic).equal(topic);
+    });
   });
 });

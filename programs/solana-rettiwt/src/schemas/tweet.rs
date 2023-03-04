@@ -3,12 +3,13 @@ use anchor_lang::prelude::*;
 #[account]
 #[derive(Default)]
 pub struct Tweet {
+    // We keep track of the user that published the tweet by storing its public key
+    pub author: Pubkey,
     // hashtags
     pub topic: String,
     // keep track of the actual content of the tweet
     pub content: String,
-    // We keep track of the user that published the tweet by storing its public key
-    pub author: Pubkey,
+
     // keep track of the time the tweet by published by storing the current timestamp
     pub created_at: i64,
 }
