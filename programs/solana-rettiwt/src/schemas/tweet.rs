@@ -1,7 +1,7 @@
 use crate::constants::*;
 use anchor_lang::prelude::*;
-
 #[account]
+#[derive(Default)]
 pub struct Tweet {
     // hashtags
     pub topic: String,
@@ -14,7 +14,7 @@ pub struct Tweet {
 }
 
 impl Tweet {
-    const LEN: usize = DISCRIMINATOR_LENGTH
+    pub const LEN: usize = DISCRIMINATOR_LENGTH
         + PUBLIC_KEY_LENGTH
         + TIMESTAMP_LENGTH
         + STRING_LENGTH_PREFIX

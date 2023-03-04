@@ -1,4 +1,9 @@
 use anchor_lang::prelude::*;
+mod constants;
+pub mod instructions;
+pub mod schemas;
+
+use instructions::*;
 
 declare_id!("5omJMVpW8feU1cD6VBVZz229KJd2uunE8wzagQ2fPwwm");
 
@@ -6,10 +11,11 @@ declare_id!("5omJMVpW8feU1cD6VBVZz229KJd2uunE8wzagQ2fPwwm");
 pub mod solana_rettiwt {
     use super::*;
 
-    pub fn initialize(_ctx: Context<Initialize>) -> Result<()> {
-        Ok(())
+    pub fn create_a_tweet(
+        _ctx: Context<CreateNewTweet>,
+        topic: String,
+        content: String,
+    ) -> Result<()> {
+        create_new_tweet::handler(_ctx, topic, content)
     }
 }
-
-#[derive(Accounts)]
-pub struct Initialize {}

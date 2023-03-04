@@ -13,18 +13,18 @@ pub struct CreateNewTweet<'info> {
     pub tweet: Account<'info, Tweet>,
     #[account(mut)]
     pub author: Signer<'info>,
-    pub system_program: Program<'info>,
+    pub system_program: Account<'info, ProgramData>,
 }
 
-pub fn handler(ctx: Context<CreateNewTweet>, topic: String, content: String) -> ProgramResult {
+pub fn handler(ctx: Context<CreateNewTweet>, topic: String, content: String) -> Result<()> {
     let tweet = &mut ctx.accounts.tweet;
 
-    if (topic.len() as u64) > MAX_TOPIC_LENGTH {
-        return Err(ErrorCode::TopicTooLong.into());
+    if (topic.len() as usize) > MAX_TOPIC_LENGTH {
+        return Err(ErrorMessage::TopicTooLong.into());
     }
 
-    if (content.len() as u64) > MAX_CONTENT_LENGTH {
-        return Err(ErrorCode::ContentTooLong.into());
+    if (content.len() as usize) > MAX_CONTENT_LENGTH {
+        return Err(ErrorMessage::ContentTooLong.into());
     }
     // The into() method is a Rust feature that converts our ErrorCode type into whatever type is required by the code which here is Err and more precisely ProgramError.
 
