@@ -24,6 +24,8 @@ export PATH="$HOME/.local/share/solana/install/active_release/bin:$PATH"
 # Check the Solana binary is available.
 solana --version
 
+solana config set --url localhost
+
 # Check you can run a local validator (Run Ctrl+C to exit).
 # We’ll see what this does in this article.
 # Note this creates a "test-ledger" folder in your current directory.
@@ -51,4 +53,10 @@ avm install latest
 avm use latest
 
 anchor --version
+```
+
+Get and update program id to `anchor.toml` and `lib.rs`
+
+```shell
+ solana address -k target/deploy/solana_rettiwt-keypair.json
 ```
