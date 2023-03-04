@@ -3,7 +3,7 @@ export class Tweet {
   constructor(publicKey, accountData) {
     this.publicKey = publicKey;
     this.author = accountData.author;
-    this.timestamp = accountData.timestamp.toString();
+    this.createdAt = accountData.createdAt.toString();
     this.topic = accountData.topic;
     this.content = accountData.content;
   }
@@ -17,10 +17,10 @@ export class Tweet {
   }
 
   get created_at() {
-    return dayjs.unix(this.timestamp).format("lll");
+    return dayjs.unix(this.createdAt).format("lll");
   }
 
   get created_ago() {
-    return dayjs.unix(this.timestamp).fromNow();
+    return dayjs.unix(this.createdAt).fromNow();
   }
 }

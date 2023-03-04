@@ -3,8 +3,14 @@ seeds = false
 [programs.localnet]
 solana_rettiwt = "GpPeaGtcBkuC7rcHnguf5p8nvHANkzTvBKMdy9NP2gbq"
 
+[programs.devnet]
+solana_twitter = "GpPeaGtcBkuC7rcHnguf5p8nvHANkzTvBKMdy9NP2gbq"
+
 [registry]
 url = "https://anchor.projectserum.com"
+
+[workspace]
+types = "app/src/idl/"
 
 [provider]
 cluster = "localnet"
@@ -12,3 +18,4 @@ wallet = "/home/leopham/.config/solana/id.json"
 
 [scripts]
 test = "yarn run ts-mocha -p ./tsconfig.json -t 1000000 tests/**/*.ts"
+copy-idl = "mkdir -p app/src/idl && cp target/idl/solana_rettiwt.json app/src/idl/solana_rettiwt.json"
