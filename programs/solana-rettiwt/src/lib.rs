@@ -5,7 +5,7 @@ pub mod schemas;
 
 use instructions::*;
 
-declare_id!("GpPeaGtcBkuC7rcHnguf5p8nvHANkzTvBKMdy9NP2gbq");
+declare_id!("AFW4wmHZzPfWXnVf8dBrx2PXCER2SdQFVg7dy1HMto4A");
 
 #[program]
 pub mod solana_rettiwt {
